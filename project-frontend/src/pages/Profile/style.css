@@ -1,0 +1,112 @@
+.tab img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 100%;
+	border: 3px solid rgba(142, 142, 142, 0.25);
+}
+
+.tab {
+	margin-top: 30px;
+	padding: 40px 20px;
+	background-color: white;
+	box-shadow: 0px 4px 4px 0px rgba(142, 142, 142, 0.25);
+	border-radius: 8px;
+	display: flex;
+}
+.tab__contents {
+	padding-left: 50px;
+	flex: 1;
+}
+.tab__contents form {
+	display: flex;
+	width: 100%;
+	gap: 50px;
+}
+
+.tab__contents form div {
+	width: 50%;
+}
+
+.tab__contents label {
+	display: block;
+	font-weight: 500;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+.tab__contents form.saved input,
+.tab__contents form.saved select {
+	border: none;
+	padding: 0;
+	font-size: 18px;
+	color: #213547;
+}
+.tab__contents form.saved select[disabled='disabled'],
+.tab__contents form.saved option:disabled {
+	color: #213547;
+}
+.tab__contents input,
+.tab__contents select {
+	border: 1px solid rgba(142, 142, 142, 0.5);
+	padding: 10px 15px;
+	font-size: 16px;
+	width: 100%;
+	border-radius: 8px;
+	display: block;
+	margin-bottom: 20px;
+}
+.make_changes {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.make_changes .logout {
+	background-color: red;
+}
+.make_changes button {
+	background-color: #1083ff;
+	color: #fff;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.modal {
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: #21354739;
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal__content {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+}
+.modal h4 {
+	color: #472121;
+}
+.modal__content div {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	padding-top: 30px;
+}
+
+.modal__content div button {
+	background-color: #1083ff;
+	color: #fff;
+}
+.modal__content div button:first-of-type {
+	background-color: red;
+}
