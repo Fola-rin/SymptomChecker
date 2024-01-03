@@ -9,6 +9,8 @@ const Login = () => {
 	const apiUrl = import.meta.env.PROD
 		? import.meta.env.VITE_API_PROD_URL
 		: import.meta.env.VITE_API_URL;
+
+	console.log(import.meta.env.VITE_API_PROD_URL);
 	let navigate = useNavigate();
 	const [userDetails, setuserDetails] = useState({
 		email: '',
