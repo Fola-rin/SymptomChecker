@@ -18,7 +18,6 @@ CREATE TABLE chats (
 CREATE TABLE messages (
     message_id SERIAL PRIMARY KEY,
     chat_id INT REFERENCES chats(chat_id) ON DELETE CASCADE,
-    sender_email VARCHAR(100) REFERENCES users(email) ON DELETE CASCADE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content TEXT NOT NULL,
     message_type TEXT NOT NULL
