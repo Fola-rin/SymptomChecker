@@ -20,6 +20,8 @@ const MainApp = () => {
 	const [message, setMessage] = useState('');
 	const [chats, setChats] = useState([]);
 	const [chatID, setChatID] = useState(null);
+	const [chatSystem, setChatSystem] = useState(null);
+
 	const [isTyping, setIsTyping] = useState(false);
 	const [diagnosis, setDiagnosis] = useState([]);
 	const [chatsState, setChatsState] = useState({ loading: true, data: [] });
@@ -57,6 +59,7 @@ const MainApp = () => {
 		const data = JSON.stringify({
 			chats,
 			chatID,
+			system: chatSystem,
 			userInfo: {
 				name: userDetails.name,
 				age: userDetails.age,
@@ -104,8 +107,9 @@ const MainApp = () => {
 			.catch((error) => console.log(error));
 	};
 
-	const loadConversation = (chat_id, diagnoses) => {
+	const loadConversation = (chat_id, system, diagnoses) => {
 		setChatID(chat_id);
+		setChatSystem(system);
 		axios({
 			method: 'get',
 			url: `${apiUrl}messages/${chat_id}`,
@@ -120,10 +124,11 @@ const MainApp = () => {
 			}
 		});
 	};
-	const createConversation = () => {
+	const createConversation = (system) => {
 		setChats([]);
 		const data = JSON.stringify({
 			sender_email: userDetails?.email,
+			system,
 		});
 		axios({
 			method: 'post',
@@ -136,6 +141,7 @@ const MainApp = () => {
 			.then((response) => {
 				console.log(response.data.response);
 				setChatID(response.data.response[0].chat_id);
+				setChatSystem(response.data.response[0].system);
 			})
 			.catch((error) => console.log(error));
 	};
@@ -153,6 +159,7 @@ const MainApp = () => {
 						<button
 							onClick={() => {
 								setChatID(null);
+								setChatSystem(null);
 								setDiagnosis([]);
 								getChats();
 							}}
@@ -228,12 +235,24 @@ const MainApp = () => {
 					<section className="convo-div">
 						<div className="intro">
 							<h2>Welcome {userDetails.name?.split(' ')[0]},</h2>
-							<button onClick={() => createConversation()}>
-								<span className="icon">
-									<img src="/assets/plus.svg" />
-								</span>{' '}
-								<span className="text">Create new Conversation</span>
-							</button>
+							<div className="button-flex">
+								<button onClick={() => createConversation('first')}>
+									<span className="icon">
+										<img src="/assets/plus.svg" />
+									</span>{' '}
+									<span className="text">
+										Create new Conversation with first system
+									</span>
+								</button>
+								<button onClick={() => createConversation('second')}>
+									<span className="icon">
+										<img src="/assets/plus.svg" />
+									</span>{' '}
+									<span className="text">
+										Create new Conversation with second system
+									</span>
+								</button>
+							</div>
 						</div>
 						<div className="actions">
 							<div className="history">
@@ -248,9 +267,14 @@ const MainApp = () => {
 										item.diagnosis === null ? (
 											<button
 												key={index}
-												onClick={() => loadConversation(item.chat_id)}
+												onClick={() =>
+													loadConversation(item.chat_id, item.system)
+												}
 											>
-												{item.chat_name}
+												{item.chat_name +
+													' (' +
+													(item.system ? item.system : 'second') +
+													' system)'}
 											</button>
 										) : (
 											''
@@ -279,7 +303,10 @@ const MainApp = () => {
 													loadConversation(item.chat_id, item.diagnosis)
 												}
 											>
-												{item.chat_name}
+												{item.chat_name +
+													' (' +
+													(item.system ? item.system : 'second') +
+													' system)'}
 											</button>
 										)
 									)

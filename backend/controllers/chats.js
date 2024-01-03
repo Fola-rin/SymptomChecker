@@ -23,17 +23,16 @@ export const getChats = async (req, res) => {
 
 export const createChat = async (req, res) => {
 	try {
-		const { sender_email } = req.body;
-		console.log(sender_email);
+		const { sender_email, system } = req.body;
 
 		const selectQuery = `
-            INSERT INTO chats (sender_email) 
-            VALUES ($1)
-            RETURNING chat_id;
+            INSERT INTO chats (sender_email, system) 
+            VALUES ($1, $2)
+            RETURNING chat_id, system;
         `;
 		let response = {};
 		try {
-			response = await pool.query(selectQuery, [sender_email]);
+			response = await pool.query(selectQuery, [sender_email, system]);
 			res.status(201).json({ response: response.rows });
 		} catch (error) {
 			console.error('Error fetching chats:', error);

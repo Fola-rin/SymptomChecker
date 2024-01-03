@@ -83,7 +83,7 @@ const handleDiagnosis = async (data) => {
 };
 export const createMessage = async (req, res) => {
 	try {
-		const { chats, chatID, userInfo } = req.body;
+		const { chats, chatID, userInfo, system } = req.body;
 		let COTSYSTEM = `
 You are a symptom checker application. 
 Utilize the below information as you interface with the user
@@ -110,7 +110,12 @@ Each object within the diagnoses array should have the following keys: A key of 
 Note that the diagnosis comes after you have asked all relevant questions.
 `;
 
-		const message = [{ role: 'system', content: INITIALSYSTEM }];
+		const message = [
+			{
+				role: 'system',
+				content: system === 'first' ? INITIALSYSTEM : COTSYSTEM,
+			},
+		];
 		const result = await openai.chat.completions.create({
 			model: 'gpt-3.5-turbo-1106',
 			messages: [...message, ...chats],

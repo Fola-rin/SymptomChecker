@@ -162,3 +162,8 @@ h1 {
 	margin-bottom: 10px;
 	display: block;
 }
+
+.button-flex {
+	display: flex;
+	gap: 30px;
+}
