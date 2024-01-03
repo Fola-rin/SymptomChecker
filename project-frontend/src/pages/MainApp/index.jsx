@@ -5,7 +5,11 @@ import axios from 'axios';
 import '../../App.css';
 import { useNavigate } from 'react-router-dom';
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.PROD
+	? import.meta.env.VITE_API_PROD_URL
+	: import.meta.env.VITE_API_URL;
+
+console.log(import.meta.env.MODE);
 
 // const PROMPT1 = 'Ensure that the responses are formatted in JSON'
 
