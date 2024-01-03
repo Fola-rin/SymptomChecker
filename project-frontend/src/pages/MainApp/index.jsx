@@ -5,6 +5,8 @@ import axios from 'axios';
 import '../../App.css';
 import { useNavigate } from 'react-router-dom';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // const PROMPT1 = 'Ensure that the responses are formatted in JSON'
 
 let userPrompt = ``;
@@ -59,7 +61,7 @@ const MainApp = () => {
 		});
 		axios({
 			method: 'post',
-			url: 'http://localhost:3000/api/messages',
+			url: `${apiUrl}messages`,
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -89,7 +91,7 @@ const MainApp = () => {
 
 		axios({
 			method: 'get',
-			url: `http://localhost:3000/api/chats/${sender_email}`,
+			url: `${apiUrl}chats/${sender_email}`,
 		})
 			.then((response) => {
 				console.log(response.data.response);
@@ -102,7 +104,7 @@ const MainApp = () => {
 		setChatID(chat_id);
 		axios({
 			method: 'get',
-			url: `http://localhost:3000/api/messages/${chat_id}`,
+			url: `${apiUrl}messages/${chat_id}`,
 		}).then((response) => {
 			console.log(response.data);
 			const chatsData = response.data.response.map((item) => {
@@ -121,7 +123,7 @@ const MainApp = () => {
 		});
 		axios({
 			method: 'post',
-			url: `http://localhost:3000/api/chats`,
+			url: `${apiUrl}chats`,
 			headers: {
 				'Content-Type': 'application/json',
 			},

@@ -14,12 +14,13 @@ app.use('/api/messages', messagesRoutes);
 app.use('/api/chats', chatsRoutes);
 app.use('/api/users', usersRoutes);
 
-// const port = 3000;
-const port = 10000;
+const port = process.env.NODE_ENV === 'development' ? 3000 : 10000;
+const hostname =
+	process.env.NODE_ENV === 'development' ? 'localhost' : '0.0.0.0';
 
 const start = async () => {
 	try {
-		app.listen(port, '0.0.0.0', () => {
+		app.listen(port, hostname, () => {
 			console.log(`Server running on port ${port}`);
 		});
 	} catch (error) {

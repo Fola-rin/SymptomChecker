@@ -102,11 +102,6 @@ const Profile = () => {
 							</div>
 						</form>
 						<div className="make_changes">
-							{editMode ? (
-								<button onClick={() => saveChanges()}>Save Changes</button>
-							) : (
-								<button onClick={() => makeChanges()}>Make Changes</button>
-							)}
 							<button className="logout" onClick={() => setShowLogout(true)}>
 								Logout
 							</button>

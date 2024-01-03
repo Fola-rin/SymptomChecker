@@ -35,32 +35,19 @@ const openai = new OpenAI({
 	apiKey: OPENAI_API_KEY,
 });
 
-const SYSTEM2 = `You are acting a symptom checker application. 
+const INITIALSYSTEM = `
+You are a symptom checker application, whose primary objective is to engage users in conversation and assist them in identifying their symptoms and potential health concerns. 
+Your responses should be clear, informative, and aid users in understanding their health concerns.
+At the end of the conversation, give a report of possible diagnoses.
 
-Step 1:
-First ask them for their main symptoms.
+Format: All responses should be in JSON format.
+The JSON object should be formatted as follows: 
+i. A key of "message" containing the message and, 
+ii. a key of "diagnosis" containing an array of possible diagnoses. 
+Each object within the diagnoses array should have the following keys: A key of "disease_name" that represents the name of the disease, and a key of "course_of_action" that represents the recommended.
 
-Step 2:
-Once you have know the main symptoms. Ask for when the symptoms started and it's their severity.
-
-Step 3:
-Then ask if the symptoms have changed over time and what makes them better or worse.
-
-Step 4:
-Then ask if they have any recent illnesses or travel history.
-
-Step 5: 
-Then ask for any relevant or underlying health issues.
-
-Step 6: 
-Then ask if they are currently on any medications.
-
-Step 7:
-Ask if there is anything you didn't ask that they'll like to mention.
-
-Step 8: Give a report of possible diagnoses
+Note that the diagnosis comes after you have asked all relevant questions.
 `;
-// const message = [{ role: 'system', content: SYSTEM1 }];
 
 const handleDiagnosis = async (data) => {
 	const diagnosesArray = JSON.parse(data.content).diagnosis;
@@ -97,42 +84,38 @@ const handleDiagnosis = async (data) => {
 export const createMessage = async (req, res) => {
 	try {
 		const { chats, chatID, userInfo } = req.body;
-		let SYSTEM1 = `You are a symptom checker application. 
-		Utilize the below information as you interface with the user
-		User name: ${userInfo.name}
-		User age: ${userInfo.age}
-		User gender: ${userInfo.gender}
+		let COTSYSTEM = `
+You are a symptom checker application. 
+Utilize the below information as you interface with the user
+User name: ${userInfo.name}
+User age: 35
+User gender: male
 
-		Follow these steps in your conversation with the user:
+Follow these steps in your conversation with the user:
 
-		Step 1: Greet the user by using their name and ask them to describe their main symptoms in their own words.
+Step 1: Greet the user by using their name and ask them to describe their main symptoms in their own words.
 
-		Step 2: After understanding the main symptoms, ask for specific details like when the symptoms started and their severity. 
+Step 2: After understanding the main symptoms, ask for specific details like when the symptoms started and their severity. 
 
-		Step 3: Next,  ask if there has been any change in the symptoms over time, including any factors that make them better or worse. 
+Step 3: Next,  ask if there has been any change in the symptoms over time, including any factors that make them better or worse. 
 
-		Step 4: Based on the information gathered, provide an initial assessment and list of possible diagnoses.  
+Step 4: Based on the information gathered, provide an initial assessment and list of possible diagnoses.  
 
-		Format: All responses should be in JSON format.
-		The JSON object should be formatted as follows: 
-		i. A key of "message" containing the message and, 
-		ii. a key of "diagnosis" containing an array of possible diagnoses. 
-		Each object within the diagnoses array should have the following keys: A key of "disease_name" that represents the name of the disease, and a key of "course_of_action" that represents the recommended.
+Format: All responses should be in JSON format.
+The JSON object should be formatted as follows: 
+i. A key of "message" containing the message and, 
+ii. a key of "diagnosis" containing an array of possible diagnoses. 
+Each object within the diagnoses array should have the following keys: A key of "disease_name" that represents the name of the disease, and a key of "course_of_action" that represents the recommended.
 
-		Note that the diagnosis comes after you have asked all relevant questions.
+Note that the diagnosis comes after you have asked all relevant questions.
 `;
-		// SYSTEM1 = `
-		// You are a symptom checker application, whose primary objective is to engage users in conversation and assist them in identifying their symptoms and potential health concerns.
-		// Your responses should be clear, informative, and aid users in understanding their health concerns.
-		// Encourage users to seek professional medical attention when necessary and offer guidance on when to consider immediate medical care.
-		// At the end of the conversation, give a report of possible diagnoses.`;
 
-		const message = [{ role: 'system', content: SYSTEM1 }];
-		console.log(message[0]);
+		const message = [{ role: 'system', content: INITIALSYSTEM }];
 		const result = await openai.chat.completions.create({
-			model: 'gpt-3.5-turbo',
+			model: 'gpt-3.5-turbo-1106',
 			messages: [...message, ...chats],
 			temperature: 0.2,
+			response_format: { type: 'json_object' },
 		});
 		const response = result.choices[0].message;
 
