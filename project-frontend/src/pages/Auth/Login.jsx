@@ -6,6 +6,9 @@ import { redirect, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const Login = () => {
+	const apiUrl = import.meta.env.PROD
+		? import.meta.env.VITE_API_PROD_URL
+		: import.meta.env.VITE_API_URL;
 	let navigate = useNavigate();
 	const [userDetails, setuserDetails] = useState({
 		email: '',
@@ -26,7 +29,7 @@ const Login = () => {
 
 			axios({
 				method: 'post',
-				url: 'http://localhost:3000/api/users/login',
+				url: `${apiUrl}users/login`,
 				headers: {
 					'Content-Type': 'application/json',
 				},

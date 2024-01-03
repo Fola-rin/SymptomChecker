@@ -6,6 +6,10 @@ import { redirect, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const Auth = () => {
+	const apiUrl = import.meta.env.PROD
+		? import.meta.env.VITE_API_PROD_URL
+		: import.meta.env.VITE_API_URL;
+
 	let navigate = useNavigate();
 	const [userDetails, setuserDetails] = useState({
 		username: '',
@@ -35,7 +39,7 @@ const Auth = () => {
 
 			axios({
 				method: 'post',
-				url: 'http://localhost:3000/api/users',
+				url: `${apiUrl}users`,
 				headers: {
 					'Content-Type': 'application/json',
 				},
