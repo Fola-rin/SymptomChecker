@@ -45,7 +45,7 @@ const Auth = () => {
 				},
 				data,
 			})
-				.then((response) => {
+				?.then((response) => {
 					setLoading(false);
 					console.log(response);
 					delete userDetails.password;
@@ -88,10 +88,11 @@ const Auth = () => {
 					<div className="tab__contents">
 						<form onSubmit={(e) => saveChanges(e)}>
 							<div>
-								<label>Name</label>
+								<label for="name">Name</label>
 								<input
 									type="text"
 									name="name"
+									id="name"
 									value={userDetails.username}
 									readOnly={loading}
 									onChange={(e) => {
@@ -102,10 +103,11 @@ const Auth = () => {
 									}}
 									required
 								/>
-								<label>Email</label>
+								<label for="email">Email</label>
 								<input
 									type="email"
 									name="email"
+									id="email"
 									value={userDetails.email}
 									readOnly={loading}
 									onChange={(e) => {
@@ -113,10 +115,11 @@ const Auth = () => {
 									}}
 									required
 								/>
-								<label>Password</label>
+								<label for="password">Password</label>
 								<input
 									type="password"
 									name="password"
+									id="password"
 									value={userDetails.password}
 									readOnly={loading}
 									onChange={(e) => {
@@ -127,9 +130,10 @@ const Auth = () => {
 									}}
 									required
 								/>
-								<label>Gender</label>
+								<label for="gender">Gender</label>
 								<select
 									name="gender"
+									id="gender"
 									value={userDetails.gender}
 									onChange={(e) => {
 										setuserDetails({ ...userDetails, gender: e.target.value });
@@ -142,13 +146,14 @@ const Auth = () => {
 									<option value="female">Female</option>
 									<option value="none">Other</option>
 								</select>
-								<label>Age</label>
+								<label for="age">Age</label>
 								<input
 									type="number"
 									value={userDetails.age}
 									min="1"
 									max="150"
 									name="age"
+									id="age"
 									readOnly={loading}
 									onChange={(e) => {
 										setuserDetails({ ...userDetails, age: e.target.value });

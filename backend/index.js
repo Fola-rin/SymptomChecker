@@ -29,3 +29,5 @@ const start = async () => {
 };
 
 start();
+
+export default app;

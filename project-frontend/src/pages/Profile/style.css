@@ -110,3 +110,20 @@ input:-webkit-autofill:active {
 .modal__content div button:first-of-type {
 	background-color: red;
 }
+
+@media screen and (max-width: 991px) {
+	.tab {
+		flex-direction: column;
+		align-items: center;
+		gap: 50px;
+	}
+	.tab__contents {
+		padding: 0;
+		width: 100%;
+	}
+	.tab__contents form {
+	}
+	.tab__contents form div {
+		width: 100%;
+	}
+}

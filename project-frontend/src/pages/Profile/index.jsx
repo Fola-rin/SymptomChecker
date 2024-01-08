@@ -24,7 +24,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		const userdata = JSON.parse(localStorage.getItem('userDetails'));
-		if (userdata) {
+		if (userdata?.username) {
 			setuserDetails({
 				name: userdata.username,
 				email: userdata.email,
@@ -52,20 +52,22 @@ const Profile = () => {
 					<div className="tab__contents">
 						<form className={editMode ? '' : 'saved'}>
 							<div>
-								<label>Name</label>
+								<label for="name">Name</label>
 								<input
 									type="text"
 									name="name"
+									id="name"
 									value={userDetails.name}
 									readOnly={!editMode}
 									onChange={(e) => {
 										setuserDetails({ ...userDetails, name: e.target.value });
 									}}
 								/>
-								<label>Email</label>
+								<label for="email">Email</label>
 								<input
 									type="email"
 									name="email"
+									id="email"
 									value={userDetails.email}
 									readOnly={!editMode}
 									onChange={(e) => {

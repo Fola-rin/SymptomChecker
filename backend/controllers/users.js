@@ -16,7 +16,6 @@ const checkUser = async (email) => {
 
 export const UserLogin = async (req, res) => {
 	const { userDetails } = req.body;
-	console.log(userDetails);
 	const exists = await checkUser(userDetails.email);
 	if (exists) {
 		try {
@@ -33,7 +32,6 @@ export const UserLogin = async (req, res) => {
 						response.rows[0].password_hash
 					)
 				) {
-					console.log(response.rows[0].password_hash);
 					delete response.rows[0].password_hash;
 					res.status(201).json({ user: response.rows[0] }); // Send user details except password_hash
 				} else {
@@ -49,7 +47,6 @@ export const UserLogin = async (req, res) => {
 			res.status(500).json({ success: false, message: error.message });
 		}
 	} else {
-		console.log(exists);
 		res.status(500).json({ success: false, message: 'User does not exist' });
 	}
 };

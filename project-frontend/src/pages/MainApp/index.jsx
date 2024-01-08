@@ -113,7 +113,7 @@ const MainApp = () => {
 		axios({
 			method: 'get',
 			url: `${apiUrl}messages/${chat_id}`,
-		}).then((response) => {
+		})?.then((response) => {
 			console.log(response.data);
 			const chatsData = response.data.response.map((item) => {
 				return { content: item.content, role: item.message_type };
@@ -262,7 +262,9 @@ const MainApp = () => {
 										<i>Loading...</i>
 									</p>
 								) : chatsState.data.length &&
-								  chatsState.data.filter((item) => item.diagnosis === null) ? (
+								  chatsState?.data?.filter(
+										(item) => item.diagnosis === null
+								  ) ? (
 									chatsState.data.map((item, index) =>
 										item.diagnosis === null ? (
 											<button

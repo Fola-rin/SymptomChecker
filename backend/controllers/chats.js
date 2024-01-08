@@ -3,7 +3,7 @@ import { pool } from '../db.js';
 export const getChats = async (req, res) => {
 	try {
 		const sender_email = req.params.sender_email;
-		console.log(sender_email);
+
 		const selectQuery = `
             SELECT * FROM chats
             WHERE sender_email = $1
@@ -11,7 +11,7 @@ export const getChats = async (req, res) => {
 		let response = {};
 		try {
 			response = await pool.query(selectQuery, [sender_email]);
-			res.status(201).json({ response: response.rows });
+			res.status(200).json({ response: response.rows });
 		} catch (error) {
 			console.error('Error fetching chats:', error);
 			res.status(500).json({ success: false, message: error.message });

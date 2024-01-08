@@ -5,8 +5,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "nodemon -r dotenv/config index.js"
+		"dev": "nodemon -r dotenv/config index.js",
+		"test": "mocha -r dotenv/config"
 	},
 	"keywords": [],
 	"author": "",
@@ -21,5 +21,11 @@
 		"nodemon": "^3.0.1",
 		"openai": "^4.12.4",
 		"pg": "^8.11.3"
+	},
+	"devDependencies": {
+		"chai": "^5.0.0",
+		"mocha": "^10.2.0",
+		"sinon": "^17.0.1",
+		"supertest": "^6.3.3"
 	}
 }

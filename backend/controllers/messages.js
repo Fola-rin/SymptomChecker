@@ -186,7 +186,7 @@ export const getMessages = async (req, res) => {
 				row.content = decrypt(row.content);
 				// console.log('Decrypted Message:', content);
 			});
-			res.status(201).json({ response: response.rows });
+			res.status(200).json({ response: response.rows });
 		} catch (error) {
 			console.error('Error fetching chats:', error);
 			res.status(500).json({ success: false, message: error.message });
